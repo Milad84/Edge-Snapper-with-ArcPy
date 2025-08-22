@@ -38,6 +38,36 @@ Approach:
 Result: A's boundary coincides with B's along shared edges, with minimal vertices and no overshoots.
 
 ---
+## Why? 
+There isn’t a single, one-click ArcGIS Pro tool that does all of what I scripted here(snap A to B and trim overshoots and thin vertices). You can, however, reproduce it with out-of-the-box tools chained together (manually, ModelBuilder, or Python):
+
+Closest built-ins to what I did:
+
+Snap (Editing toolbox) — arcpy.edit.Snap
+What it does: moves A’s vertices/edges onto B within a tolerance (use targets EDGE and VERTEX).
+Limit: does not remove the little triangular overshoot slivers by itself.
+
+Erase / Pairwise Erase (Analysis)
+What it does: trims A by removing A ∩ B (this is the overshoot cleanup we added).
+Use: Erase first; fall back to Pairwise Erase if needed.
+
+Simplify Polygon (Cartography) with POINT_REMOVE
+What it does: drops near-collinear vertices to keep geometry light after snapping/trim.
+
+Those three together = the same pipeline I create here.
+
+Alternatives (situational)
+
+Integrate (Data Management)
+Snaps coincident vertices within a cluster tolerance across inputs. Works best on boundary lines:
+Polygon To Line (A & B) → Integrate (lines) → Feature To Polygon (then re-join attributes).
+Pros: global, shared vertices. Cons: heavier workflow, touches both datasets.
+
+Topology + Validate
+Rules like Must Not Overlap (Area) and optionally Must Not Have Gaps (Area) will find issues; fixes are semi-manual (error inspector). Good for QA, not a turnkey auto-fix.
+
+Production Mapping / Conflation (licensed extension)
+Tools such as Rubber Sheet Features, Transfer Attributes, and change detection can align to a reference, but they require setup (links/anchors) and are usually line-focused. They don’t replicate our snap-trim-simplify sequence in one step.
 
 ## Screenshots
 
