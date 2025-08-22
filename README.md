@@ -96,7 +96,7 @@ Optional (run from Pro's Python environment):
 
 ## Parameters
 
-All parameters live near the top of `scripts/snap_align_v2_2.py`.
+All parameters live near the top of the script.
 
 | Name | Purpose | Default | Notes |
 | --- | --- | --- | --- |
