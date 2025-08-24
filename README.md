@@ -95,7 +95,7 @@ Tools such as Rubber Sheet Features, Transfer Attributes, and change detection c
    - A: `New_Vision_Zero_Polygon_Test_For_Snapping`
    - B: `Current_Vision_Zero_Test_For_Snapping`
 2. Open ArcGIS Pro and the Python window (or a Notebook).
-3. Open `scripts/snap_align_v2_2.py` and edit the three paths at the top:
+3. Open the script and edit the three paths at the top:
    - `FC_A` (feature class A)
    - `FC_B` (feature class B)
    - `OUT_GDB` (target geodatabase for outputs)
